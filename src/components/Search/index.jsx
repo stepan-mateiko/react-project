@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import md5 from "md5";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, CircularProgress } from "@mui/material";
 
 const Search = ({ element }) => {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [isSearching, setIsSearching] = useState(false);
+  useEffect(() => {
+    setItems([]);
+    setSearchTerm("");
+  }, [element]);
   let name = "";
   if (element === "character" || element === "event") {
     name = "name";
@@ -23,6 +27,8 @@ const Search = ({ element }) => {
   let allItems = [];
 
   const handleSearch = async (event) => {
+    setItems([]);
+    setIsSearching(true);
     event.preventDefault();
     const response = await fetch(url);
     const data = await response.json();
@@ -46,31 +52,37 @@ const Search = ({ element }) => {
       });
     }
     setItems(allItems);
+    setIsSearching(false);
   };
 
   return (
     <SearchPanel>
-      {console.log(items)}
-      <form onSubmit={handleSearch}>
-        <TextField
+      <SearchTitle>{`Search for the ${element}s you want to read about`}</SearchTitle>
+      <SearchForm onSubmit={handleSearch}>
+        <SearchField
           id="outlined-basic"
-          label="Type here"
           variant="outlined"
-          size="small"
           type="text"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
         />
-        <Button variant="contained" type="submit">
-          Search
-        </Button>
-      </form>
+        <SearchButton
+          variant="contained"
+          type="submit"
+          color="error"
+        >{`Search ${element}`}</SearchButton>
+      </SearchForm>
+      {isSearching && (
+        <div style={{ display: "flex", justifyContent: "center", margin: 50 }}>
+          <CircularProgress />
+        </div>
+      )}
       <ItemsList>
         {items.map((item) => (
           <SearchItem key={item.id}>
             <SearchLink to={`/${element}/${item.id}`}>
+              <Icon src={item.image} />
               <p>{item.name}</p>
-              <img src={item.image} width="100px" />
             </SearchLink>
           </SearchItem>
         ))}
@@ -88,19 +100,76 @@ const SearchPanel = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
-  background: linear-gradient(to bottom, #f5f5f5, #e5e5e5);
+  background-color: darkslateblue;
+  flex-direction: column;
+  align-items: center;
+  font-family: Open-sans, sans-serif;
+  color: floralwhite;
 `;
-
+const SearchTitle = styled.h2`
+  font-size: 28px;
+  text-align: center;
+`;
+const SearchForm = styled.form`
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  @media (max-width: 768px) {
+    width: 90%;
+    flex-direction: column;
+    gap: 20px;
+  }
+`;
+const SearchField = styled(TextField)({
+  width: "60%",
+  borderRadius: "5%",
+  backgroundColor: "mistyrose",
+  "& label": {
+    color: "red",
+  },
+  "& label.Mui-focused": {
+    color: "crimson",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "red",
+      color: "red",
+    },
+    "&:hover fieldset": {
+      borderColor: "red",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "red",
+    },
+  },
+  "@media(max-width: 768px)": {
+    width: "100%",
+  },
+});
+const SearchButton = styled(Button)`
+  padding: 15px !important;
+`;
 const ItemsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
+  padding: 0;
 `;
 const SearchItem = styled.li`
   list-style-type: none;
-  width: 30%;
+  width: 20%;
+  text-align: center;
+  @media (max-width: 360px) {
+    width: 100%;
+  }
 `;
 const SearchLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: white;
+`;
+const Icon = styled.img`
+  width: 60%;
+  border: solid 1px white;
 `;

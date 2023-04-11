@@ -11,6 +11,7 @@ const Dashboard = ({ element }) => {
 
   useEffect(() => {
     const fetchItems = async () => {
+      setItems([]);
       const apiKey = "2014db88991539ad5fe113d6ba4b49ab";
       const privateKey = "f8651f9e58eb5babbb2ec6b99c0b0729c05afe69";
       const ts = Date.now();
@@ -63,7 +64,7 @@ const Dashboard = ({ element }) => {
             };
           });
       }
-
+      allItems = allItems.slice(0, 20);
       setItems(allItems);
     };
     fetchItems();
@@ -71,12 +72,13 @@ const Dashboard = ({ element }) => {
   if (items.length === 0) {
     return (
       <div style={{ display: "flex", justifyContent: "center", margin: 50 }}>
-        <CircularProgress />;
+        <CircularProgress />
       </div>
     );
   }
   return (
-    <div>
+    <DashboardPanel>
+      <DashboardTitle>{`Or discover other random ${element}s`}</DashboardTitle>
       <Container>
         {items.map((item) => (
           <Card key={item.id}>
@@ -87,29 +89,44 @@ const Dashboard = ({ element }) => {
           </Card>
         ))}
       </Container>
-    </div>
+    </DashboardPanel>
   );
 };
 
 export default Dashboard;
 
+const DashboardPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: blueviolet;
+  font-family: Open-sans, sans-serif;
+`;
+const DashboardTitle = styled.h2`
+  color: floralwhite;
+  font-size: 28px;
+  text-align: center;
+`;
 const Container = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   list-style-type: none;
-  background-color: black;
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  justify-content: center;
+  padding: 0;
 `;
 const Card = styled.li`
-  width: 200px;
+  width: 20%;
   text-align: center;
   padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 360px) {
+    width: 100%;
+  }
 `;
 
 const DashboardLink = styled(Link)`
@@ -117,7 +134,7 @@ const DashboardLink = styled(Link)`
   color: white;
 `;
 const Icon = styled.img`
-  width: 100px;
+  width: 60%;
   border: solid 1px white;
 `;
 

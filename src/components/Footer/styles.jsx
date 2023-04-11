@@ -16,15 +16,34 @@ export const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 769px) {
+    flex-direction: column;
+  }
 `;
 export const LogoLink = styled(Link)`
-  width: 30%;
+  width: 20%;
+  @media (max-width: 360px) {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 769px) {
+    width: 50%;
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-bottom: 20px;
+  }
 `;
 export const Links = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   gap: 10px;
+  text-align: left;
+  @media (max-width: 769px) {
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-bottom: 20px;
+  }
 `;
 export const TextLink = styled(Link)`
   text-decoration: none;
@@ -36,6 +55,9 @@ export const TextLink = styled(Link)`
 `;
 export const Icons = styled.div`
   width: 30%;
+  @media (max-width: 769px) {
+    width: 95%;
+  }
 `;
 export const IconWrapper = styled.div`
   display: flex;
@@ -56,4 +78,7 @@ export const IconLink = styled(Link)`
 export const Copyright = styled.div`
   width: 40%;
   color: white;
+  @media (max-width: 769px) {
+    width: 60%;
+  }
 `;

@@ -26,7 +26,7 @@ const Information = ({ item, id, element }) => {
     while (!comics || !events || !series) {
       return (
         <div style={{ display: "flex", justifyContent: "center", margin: 50 }}>
-          <CircularProgress />;
+          <CircularProgress />
         </div>
       );
     }
@@ -41,7 +41,7 @@ const Information = ({ item, id, element }) => {
     while (!characters || !events || !series) {
       return (
         <div style={{ display: "flex", justifyContent: "center", margin: 50 }}>
-          <CircularProgress />;
+          <CircularProgress />
         </div>
       );
     }
@@ -56,7 +56,7 @@ const Information = ({ item, id, element }) => {
     while (!comics || !characters || !series) {
       return (
         <div style={{ display: "flex", justifyContent: "center", margin: 50 }}>
-          <CircularProgress />;
+          <CircularProgress />
         </div>
       );
     }
@@ -71,7 +71,7 @@ const Information = ({ item, id, element }) => {
     while (!comics || !events || !characters) {
       return (
         <div style={{ display: "flex", justifyContent: "center", margin: 50 }}>
-          <CircularProgress />;
+          <CircularProgress />
         </div>
       );
     }
@@ -84,49 +84,62 @@ const Information = ({ item, id, element }) => {
   }
 
   return (
-    <MarvelCharacterWrapper>
+    <InformationPanel>
       <Name>{element === "character" ? name : title}</Name>
-      <Image src={`${thumbnail.path}.${thumbnail.extension}`} alt={name} />
-      <Description>
-        {description ||
-          `Sorry, but no description avaiable for ${name || title}`}
-      </Description>
-      <InfoList>
-        <InfoItem>{firstConnection}</InfoItem>
-        <Container id={id} element={element} item={firstContainer} />
-        <InfoItem>{secondConnection}</InfoItem>
-        <Container id={id} element={element} item={secondContainer} />
-        <InfoItem>{thirdConnection}</InfoItem>
-        <Container id={id} element={element} item={thirdContainer} />
-      </InfoList>
-      <Links>
-        <LinksTitle>{`You can get more detailed info about this ${element} here`}</LinksTitle>
-        {urls.map((url) => (
-          <Link key={url.type} href={url.url} target="_blank">
-            {url.type}
-          </Link>
-        ))}
-      </Links>
-    </MarvelCharacterWrapper>
+      <InformationWrapper>
+        <InformationBasics>
+          <Image src={`${thumbnail.path}.${thumbnail.extension}`} alt={name} />
+          <Description>
+            {description ||
+              `Sorry, but no description avaiable for ${name || title}`}
+          </Description>
+          <Links>
+            <LinksTitle>{`You can get more detailed info about this ${element} here`}</LinksTitle>
+            {urls.map((url) => (
+              <Link key={url.type} href={url.url} target="_blank">
+                {url.type}
+              </Link>
+            ))}
+          </Links>
+        </InformationBasics>
+
+        <InfoList>
+          <InfoItem>{firstConnection}</InfoItem>
+          <Container id={id} element={element} item={firstContainer} />
+          <InfoItem>{secondConnection}</InfoItem>
+          <Container id={id} element={element} item={secondContainer} />
+          <InfoItem>{thirdConnection}</InfoItem>
+          <Container id={id} element={element} item={thirdContainer} />
+        </InfoList>
+      </InformationWrapper>
+    </InformationPanel>
   );
 };
 
 export default Information;
 
-export const MarvelCharacterWrapper = styled.div`
+export const InformationPanel = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Arial, sans-serif;
+  font-family: Open-sans, sans-serif;
   padding: 20px;
-  background: linear-gradient(to bottom, #f5f5f5, #e5e5e5);
+  background-color: royalblue;
 `;
 
 export const Name = styled.h1`
-  font-size: 24px;
+  font-size: 36px;
   margin-bottom: 10px;
 `;
 
+const InformationWrapper = styled.div`
+  display: flex;
+`;
+const InformationBasics = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 export const Image = styled.img`
   max-width: 300px;
   height: auto;
@@ -170,6 +183,7 @@ const Links = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 `;
 const LinksTitle = styled.h2`
   font-size: 20px;

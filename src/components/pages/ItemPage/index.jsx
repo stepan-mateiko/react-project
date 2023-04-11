@@ -34,7 +34,7 @@ const ItemPage = ({ setId }) => {
         <Header setCategory={setCategory} setId={setId} />
 
         <div style={{ display: "flex", justifyContent: "center", margin: 50 }}>
-          <CircularProgress />;
+          <CircularProgress />
         </div>
 
         <Footer />

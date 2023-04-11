@@ -64,18 +64,30 @@ const Title = styled.h1`
   margin-top: 32px;
   font-weight: bold;
   opacity: 1;
+  @media (max-width: 768px) {
+    margin: 0;
+  }
 `;
 
 const Subtitle = styled.h3`
   margin-top: 16px;
   text-align: center;
   opacity: 1;
+  @media (max-width: 768px) {
+    margin: 0;
+  }
 `;
 
 const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
-  gap: 20px;
+  width: 100%;
+  gap: 10px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
 `;
 const StyledButton = styled.button`
   margin-top: 32px;
@@ -86,6 +98,10 @@ const StyledButton = styled.button`
   border-radius: 15px;
   background-color: red;
   cursor: pointer;
+  width: 25%;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 const Info = styled.div`
   position: absolute;
@@ -100,6 +116,11 @@ const Info = styled.div`
   padding: 30px;
   opacity: 0.85;
   border-radius: 30px;
+  @media (max-width: 768px) {
+    width: 90%;
+    transform: translate(-50%, 10%);
+    padding: 10px;
+  }
 `;
 const EnterLink = styled(Link)`
   color: white;

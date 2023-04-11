@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import md5 from "md5";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { all } from "axios";
 
 const Container = ({ id, element, item }) => {
   const [items, setItems] = useState([]);
+  const [shortList, setShortList] = useState([]);
+  const [isExtended, setExtended] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const apiKey = "2014db88991539ad5fe113d6ba4b49ab";
@@ -12,8 +16,9 @@ const Container = ({ id, element, item }) => {
       const ts = Date.now();
       const hash = md5(ts + privateKey + apiKey);
       let allItems = [];
+      let shortArray = [];
       const response = await fetch(
-        `https://gateway.marvel.com/v1/public/${item}?ts=${ts}&apikey=${apiKey}&hash=${hash}&${element}s=${id}`
+        `https://gateway.marvel.com/v1/public/${item}?ts=${ts}&apikey=${apiKey}&limit=100&hash=${hash}&${element}s=${id}`
       );
       const data = await response.json();
       allItems = allItems.concat(data.data.results);
@@ -37,17 +42,25 @@ const Container = ({ id, element, item }) => {
           };
         });
       }
-      if (allItems.length > 20) {
-        allItems = allItems.slice(0, 20);
-      }
       setItems(allItems);
+      if (allItems.length > 20) {
+        setShortList(allItems.slice(0, 20));
+      } else {
+        setShortList(allItems);
+      }
     };
     fetchData();
   }, []);
+
+  const ShowMore = () => {
+    !isExtended ? setShortList(items) : setShortList(items.slice(0, 20));
+    !isExtended ? setExtended(true) : setExtended(false);
+  };
+
   return (
     <>
       <ItemsList>
-        {items.map((item) => (
+        {shortList.map((item) => (
           <Card key={item.id}>
             <ItemLink to={`/${item.category}/${item.id}`}>
               <Name>{item.name}</Name>
@@ -55,6 +68,8 @@ const Container = ({ id, element, item }) => {
             </ItemLink>
           </Card>
         ))}
+        {!isExtended && <button onClick={ShowMore}>Show more</button>}
+        {isExtended && <button onClick={ShowMore}>Show less</button>}
       </ItemsList>
     </>
   );
