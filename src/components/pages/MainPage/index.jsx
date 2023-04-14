@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import propTypes from "prop-types";
+
 import Dashboard from "../../Dashboard";
 import Search from "../../Search";
 import Header from "../../Header";
@@ -17,3 +19,8 @@ const MainPage = ({ id, setId }) => {
 };
 
 export default MainPage;
+
+MainPage.propTypes = {
+  id: propTypes.string,
+  setId: propTypes.func,
+};

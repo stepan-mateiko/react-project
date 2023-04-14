@@ -21,68 +21,60 @@ import {
   Copyright,
 } from "./styles";
 
+import {
+  marvel,
+  privacy,
+  terms,
+  license,
+  cookie,
+  facebookLink,
+  instagramLink,
+  twitterLink,
+  youtubeLink,
+  tumblrLink,
+  pinterestLink,
+} from "../../constants/links";
+
 const Footer = () => {
   return (
     <AllFooter>
       <FooterContainer>
-        <LogoLink to={"https://www.marvel.com/"}>
+        <LogoLink to={marvel} target="_blank">
           <img src={Logo} alt="logo" width="100%" />
         </LogoLink>
         <Links>
-          <TextLink
-            to={
-              "https://privacy.thewaltdisneycompany.com/en/current-privacy-policy/"
-            }
-            target="_blank"
-          >
+          <TextLink to={privacy} target="_blank">
             Privacy Policy
           </TextLink>
-          <TextLink
-            to={`https://disneytermsofuse.com/english-united-kingdom/`}
-            target="_blank"
-          >
+          <TextLink to={terms} target="_blank">
             Terms of Use
           </TextLink>
-          <TextLink
-            to={"https://www.marvel.com/corporate/license_tou"}
-            target="_blank"
-          >
+          <TextLink to={license} target="_blank">
             License agreement
           </TextLink>
-          <TextLink
-            to={
-              "https://privacy.thewaltdisneycompany.com/en/current-privacy-policy/cookies-policy"
-            }
-            target="_blank"
-          >
+          <TextLink to={cookie} target="_blank">
             Cookie Policy
           </TextLink>
         </Links>
         <Icons>
           <p>Follow Marvel</p>
           <IconWrapper>
-            <IconLink to={"http://facebook.com/marvel"} target="_blank">
+            <IconLink to={facebookLink} target="_blank">
               <Facebook />
             </IconLink>
-            <IconLink to={"http://instagram.com/marvel"} target="_blank">
+            <IconLink to={instagramLink} target="_blank">
               <Instagram />
             </IconLink>
-            <IconLink to={"http://twitter.com/marvel"} target="_blank">
+            <IconLink to={twitterLink} target="_blank">
               <Twitter />
             </IconLink>
-            <IconLink
-              to={"http://marvelentertainment.tumblr.com/"}
-              target="_blank"
-            >
+            <IconLink to={tumblrLink} target="_blank">
               <Tumblr />
             </IconLink>
-            <IconLink to={"http://youtube.com/marvel"} target="_blank">
+            <IconLink to={youtubeLink} target="_blank">
               <Youtube />
             </IconLink>
-            <IconLink
-              to={"https://www.pinterest.com/marvelofficial"}
-              target="_blank"
-            >
+            <IconLink to={pinterestLink} target="_blank">
               <Pinterest />
             </IconLink>
           </IconWrapper>
